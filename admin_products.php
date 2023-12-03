@@ -13,6 +13,7 @@
    if(isset($_POST['add_product'])){//thêm sách mới từ submit form name='add_product'
 
       $name = mysqli_real_escape_string($conn, $_POST['name']);
+      $trademark = mysqli_real_escape_string($conn, $_POST['trademark']);
       $cate_id= $_POST['category'];
       $price = $_POST['price'];
       $discount = $_POST['discount'];
@@ -30,7 +31,7 @@
       if(mysqli_num_rows($select_product_name) > 0){
          $message[] = 'Sản phẩm đã tồn tại.';
       }else{//chưa thì thêm mới
-         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, cate_id, price, discount, newprice,quantity,initial_quantity, describes, image) VALUES('$name', '$cate_id', '$price', '$discount', '$newprice', '$quantity', '$initial_quantity', '$describe', '$image')") or die('query failed');
+         $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, trademark, cate_id, price, discount, newprice,quantity,initial_quantity, describes, image) VALUES('$name', '$trademark', '$cate_id', '$price', '$discount', '$newprice', '$quantity', '$initial_quantity', '$describe', '$image')") or die('query failed');
 
          if($add_product_query){
             if($image_size > 2000000){//kiểm tra kích thước ảnh
@@ -58,6 +59,7 @@
 
       $update_p_id = $_POST['update_p_id'];
       $update_name = $_POST['update_name'];
+      $update_trademark = $_POST['update_trademark'];
       $update_category = $_POST['update_category'];
       $update_price = $_POST['update_price'];
       $update_discount = $_POST['update_discount'];
@@ -65,7 +67,7 @@
       $update_quantity = $_POST['update_quantity'];
       $update_describe = $_POST['update_describe'];
 
-      mysqli_query($conn, "UPDATE `products` SET name = '$update_name', cate_id='$update_category', price = '$update_price', newprice='$update_newprice', discount='$update_discount', quantity='$update_quantity', describes='$update_describe' WHERE id = '$update_p_id'") or die('query failed');
+      mysqli_query($conn, "UPDATE `products` SET name = '$update_name', trademark = '$update_trademark', cate_id='$update_category', price = '$update_price', newprice='$update_newprice', discount='$update_discount', quantity='$update_quantity', describes='$update_describe' WHERE id = '$update_p_id'") or die('query failed');
 
       $update_image = $_FILES['update_image']['name'];
       $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
@@ -124,6 +126,7 @@
    <form action="" method="post" enctype="multipart/form-data">
       <h3>Thêm sản phẩm</h3>
       <input type="text" name="name" class="box" placeholder="Tên sản phẩm" required>
+      <input type="text" name="trademark" class="box" placeholder="Thương hiệu" required>
       <select name="category" class="box">
          <?php
             $select_category= mysqli_query($conn, "SELECT * FROM `categorys`") or die('Query failed');
@@ -133,7 +136,7 @@
                }
             }
             else{
-               echo "<option>Không có danh mục nào.</option>";
+               echo "<option>Không có thể loại nào.</option>";
             }
          ?>
       </select>
@@ -157,8 +160,9 @@
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
                <div style="height: -webkit-fill-available;" class="box">
-                  <img style="border-radius: 4px; height: 220px;" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
+                  <img style="height: 23rem !important" style="border-radius: 4px;" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                   <div class="name"><?php echo $fetch_products['name']; ?></div>
+                  <div class="sub-name">Thương hiệu: <?php echo $fetch_products['trademark']; ?></div>
                   <?php
                   $cate_id =  $fetch_products['cate_id'];
                       $result= mysqli_query($conn, "SELECT * FROM `categorys` WHERE id = $cate_id") or die('Query failed');
@@ -193,7 +197,7 @@
                <form action="" method="post" enctype="multipart/form-data">
                   <input type="hidden" name="update_p_id" value="<?php echo $fetch_update['id']; ?>">
                   <input type="hidden" name="update_old_image" value="<?php echo $fetch_update['image']; ?>">
-                  <input type="hidden" name="update_discount" value="<?php echo $fetch_update['discount']; ?>">
+                  <input type="hidden" name="update_trademark" value="<?php echo $fetch_update['trademark']; ?>">
                   <img src="uploaded_img/<?php echo $fetch_update['image']; ?>" alt="">
                   <input type="text" name="update_name" value="<?php echo $fetch_update['name']; ?>" class="box" required placeholder="Tên sản phẩm">
                   <select name="update_category" class="box">
@@ -202,7 +206,7 @@
                       $result= mysqli_query($conn, "SELECT * FROM `categorys` WHERE id = $cate_id") or die('Query failed');
                       $cate_name = mysqli_fetch_assoc($result)
                    ?>
-                     <option value="<?php echo $cate_name['id']?>" disabled><?=$cate_name['name']?></option>
+                     <option value="<?php echo $cate_name['id']?>"><?=$cate_name['name']?></option>
                      <?php
                         $select_category= mysqli_query($conn, "SELECT * FROM `categorys`") or die('Truy vấn lỗi');
                         while($fetch_category=mysqli_fetch_assoc($select_category)){
