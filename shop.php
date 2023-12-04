@@ -85,7 +85,7 @@
          border-right: none;
       }
       .head {
-         background: url(./images/head_img.jpg) no-repeat;
+         background: url(./images/home-about.jpg) no-repeat;
          background-size: cover;
          background-position: center;
       }
@@ -94,23 +94,11 @@
 <body>
    
 <?php include 'header.php'; ?>
-
 <div class="heading head">
-   <h3>Cửa hàng</h3>
-   <p> <a href="home.php">Trang chủ</a> / Cửa hàng </p>
 </div>
-
 <section class="products">
 
    <h1 class="title">Tất cả sản phẩm</h1>
-
-   <!-- <select class="sort-box" onchange="window.location = this.options[this.selectedIndex].value">
-      <option>Sắp xếp</option>
-      <option value="?field=id& sort=DESC">Sản phẩm mới nhất</option>
-      <option value="?field=id& sort=ASC">Sản phẩm cũ nhất</option>
-      <option value="?field=newprice& sort=ASC">Giá tăng dần</option>
-      <option value="?field=newprice& sort=DESC">Giá giảm dần</option>
-   </select> -->
    <div class="list-cate">
       <?php  
          $select_categoriess = mysqli_query($conn, "SELECT * FROM `categorys`") or die('query failed');
@@ -145,7 +133,7 @@
                      <form style="height: -webkit-fill-available;" action="" method="post" class="box">
                         <img width="207px" height="224px" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                         <div class="name"><?php echo $fetch_products['name']; ?></div>
-                        <div class="sub-name">Mô tả: <?php echo $fetch_products['describes']; ?></div>
+                        <div class="sub-name">Thương hiệu: <?php echo $fetch_products['trademark']; ?></div>
                         <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u> (-<?php echo $fetch_products['discount']; ?>%)</div>
                         <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
                         <input type="number" min="<?=($fetch_products['quantity']>0) ? 1:0 ?>" max="<?php echo $fetch_products['quantity']; ?>" name="product_quantity" value="<?=($fetch_products['quantity']>0) ? 1:0 ?>" class="qty">

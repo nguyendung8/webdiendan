@@ -22,7 +22,7 @@
    <link rel="stylesheet" href="css/style.css">
    <style>
       .head {
-         background: url(./images/head_img.jpg) no-repeat;
+         background: url(./images/home-about.jpg) no-repeat;
          background-size: cover;
          background-position: center;
       }
@@ -33,8 +33,6 @@
 <?php include 'header.php'; ?>
 
 <div class="heading head">
-   <h3>Về Food</h3>
-   <p> <a href="home.php">Trang chủ</a> / Thông tin </p>
 </div>
 
 <section class="about">
@@ -42,13 +40,13 @@
    <div class="flex">
 
       <div class="image">
-         <img height="400px" src="images/about_img.jpg" alt="">
+         <img height="350px" src="images/about_img.jpeg" alt="">
       </div>
 
       <div class="content">
-         <h3>Tại sao lại có Food.</h3>
-         <p>Đồ ăn nhanh thường được phục vụ ngay tại quán hoặc có thể mang đi, giúp người tiêu dùng tiết kiệm thời gian và công sức với việc nấu ăn tại nhà.</p>
-         <p> Ăn uống lành mạnh sẽ giúp cân bằng và cải thiện tâm trạng theo chiều hướng tốt hơn.</p>
+         <h3>Tại sao lại có Ngọc Huy Shoes.</h3>
+         <p>Thoải mái trong từng bước đi, hãy mang ánh sáng trên đôi chân của bạn, hãy mạnh mẽ trong cuộc sống, năng động trong sự thoải mái.</p>
+         <p>Tạo dấu chân của riêng bạn.</p>
          <a href="contact.php" class="btn">Liên hệ</a>
       </div>
 
@@ -59,17 +57,17 @@
 
 <section class="authors">
 
-   <h1 class="title">Thành viên của Food</h1>
+   <h1 class="title">Thành viên của Ngọc Huy Shoes</h1>
 
    <div class="box-container">
 
       <div class="box">
-         <img src="images/author-2.jpg" alt="">
+         <img src="images/anhcanhan.jpg" alt="">
          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
+            <a href="https://www.facebook.com/ngochuymarketing" class="fab fa-facebook-f" target="_blank"></a>
             <a href="#" class="fab fa-instagram"></a>
          </div>
-         <h3>Mina</h3>
+         <h3>Ngọc Huy</h3>
       </div>
    </div>
 

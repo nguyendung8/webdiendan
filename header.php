@@ -27,7 +27,7 @@
    <div class="header-1">
       <div class="flex">
          <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
+            <a href="https://www.facebook.com/ngochuymarketing" class="fab fa-facebook-f" target="_blank"></a>
             <a href="#" class="fab fa-instagram"></a>
          </div>
          <p><a href="login.php">Đăng nhập mới</a> | <a href="register.php">Đăng ký</a> </p>
@@ -36,7 +36,7 @@
 
    <div class="header-2">
       <div class="flex">
-         <a href="home.php" class="logo"><img width="120px" height="104px" src="./images/logo_food.png"></a>
+         <a href="home.php" class="logo"><img width="120px" height="104px" src="./images/logo.png"></a>
 
          <nav class="navbar">
             <a href="home.php">Trang chủ</a>
@@ -62,8 +62,7 @@
          </div>
 
          <div style="z-index: 1000;" class="user-box">
-            <p>Tên người dùng : <span><?php echo $_SESSION['user_name']; ?></span></p>
-            <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+            <p>Tên : <span><?php echo $_SESSION['user_name']; ?></span></p>
             <a href="change_password.php" class="changepw-btn">Đổi mật khẩu</a>
             <a style="margin-top: 13px;" href="logout.php" class="delete-btn">Đăng xuất</a>
          </div>

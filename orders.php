@@ -24,7 +24,7 @@
    <link rel="stylesheet" href="css/style.css">
    <style>
       .head {
-         background: url(./images/head_img.jpg) no-repeat;
+         background: url(./images/home-about.jpg) no-repeat;
          background-size: cover;
          background-position: center;
       }
@@ -35,8 +35,6 @@
 <?php include 'header.php'; ?>
 
 <div class="heading head">
-   <h3>Đơn hàng của bạn</h3>
-   <p> <a href="home.php">Trang chủ</a> / Đơn hàng </p>
 </div>
 
 <section class="placed-orders">

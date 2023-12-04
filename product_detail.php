@@ -117,6 +117,7 @@
                     Số lượng còn: 
                     <?php echo ($productItem['quantity']) ?>
                 </p>
+                <div style="font-size: 17px; margin-top: 3px;">Thương hiệu: <?php echo $productItem['trademark']; ?></div>
                 <p class="peoductdetail-desc">
                     Mô tả: 
                     <?php echo($productItem['describes'])  ?>
