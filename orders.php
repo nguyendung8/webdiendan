@@ -24,7 +24,7 @@
    <link rel="stylesheet" href="css/style.css">
    <style>
       .head {
-         background: url(./images/home-about.jpg) no-repeat;
+         background: url(./images/head_img.png) no-repeat;
          background-size: cover;
          background-position: center;
       }

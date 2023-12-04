@@ -10,21 +10,21 @@
       }
    }
 ?>
-
+<link rel="stylesheet" href="./css/admin_style.css">
 <header class="header">
 
    <div class="flex">
 
       <a href="admin_page.php" class="logo">Quản lý</a>
 
-      <nav style="margin-bottom: 0px;" class="navbar">
-         <a href="admin_page.php">Trang chủ</a>
-         <a href="admin_products.php">Sản phẩm</a>
-         <a href="admin_category.php">Danh mục</a>
-         <a href="admin_orders.php">Đơn hàng</a>
-         <a href="admin_users.php">Người dùng</a></a>
-         <a href="admin_contacts.php">Tin nhắn</a>
-         <a href="admin_statistical.php">Thống kê</a>
+      <nav style="margin-bottom: 0px !important;min-height: unset !important;" class="navbar">
+         <a style="text-decoration: none !important;" href="admin_page.php">Trang chủ</a>
+         <a style="text-decoration: none !important;" href="admin_products.php">Sản phẩm</a>
+         <a style="text-decoration: none !important;" href="admin_category.php">Danh mục</a>
+         <a style="text-decoration: none !important;" href="admin_orders.php">Đơn hàng</a>
+         <a style="text-decoration: none !important;" href="admin_users.php">Người dùng</a></a>
+         <a style="text-decoration: none !important;" href="admin_contacts.php">Tin nhắn</a>
+         <a style="text-decoration: none !important;" href="admin_statistical.php">Thống kê</a>
       </nav>
 
       <div class="icons">

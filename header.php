@@ -36,7 +36,7 @@
 
    <div class="header-2">
       <div class="flex">
-         <a href="home.php" class="logo"><img width="120px" height="104px" src="./images/logo.png"></a>
+         <a href="home.php" class="logo"><img width="210px" height="85px" src="./images/logo_toco.png"></a>
 
          <nav class="navbar">
             <a href="home.php">Trang chủ</a>

@@ -55,7 +55,7 @@
    <link rel="stylesheet" href="css/style.css">
    <style>
       .head {
-         background: url(./images/home-about.jpg) no-repeat;
+         background: url(./images/head_img.png) no-repeat;
          background-size: cover;
          background-position: center;
       }
@@ -70,7 +70,7 @@
 
 <section class="search-form">
    <form action="" method="post">
-      <input type="text" name="search" placeholder="Tìm sản phẩm..." class="box">
+      <input type="text" name="search" placeholder="Tìm sản phẩm..." class="box" value="<?php if(isset($_POST['submit'])) echo $_POST['search'] ?>">
       <input type="submit" name="submit" value="Tìm kiếm" class="btn">
    </form>
 </section>
@@ -88,7 +88,6 @@
                   <form style="height: -webkit-fill-available;" action="" method="post" class="box">
                      <img  width="207px" height="224px" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                      <div class="name"><?php echo $fetch_products['name']; ?></div>
-                     <div class="sub-name">Thương hiệu: <?php echo $fetch_products['trademark']; ?></div>
                      <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u> (-<?php echo $fetch_products['discount']; ?>%)</div>
                      <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
                      <input type="number" min="<?=($fetch_products['quantity']>0) ? 1:0 ?>" max="<?php echo $fetch_products['quantity']; ?>" name="product_quantity" value="<?=($fetch_products['quantity']>0) ? 1:0 ?>" class="qty">

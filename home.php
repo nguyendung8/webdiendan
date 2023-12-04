@@ -109,7 +109,7 @@
       }
       .home-banner {
          min-height: 70vh;
-         background:linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), url(./images/home_bg.jpg) no-repeat;
+         background:linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), url(./images/about-home.png) no-repeat;
          background-size: cover;
          background-position: center;
          display: flex;
@@ -127,25 +127,25 @@
 <div class="content">
       <div class="slideshow-container">
          <div class="slide fade">
-            <img src="./images/slider1.jpg" alt="slide 1">
+            <img src="./images/slide1.png" alt="slide 1">
          </div>
          <div class="slide fade">
-            <img src="./images/slider2.jpg" alt="slide 2">
+            <img src="./images/slide2.jpg" alt="slide 2">
          </div>
          <div class="slide fade">
-            <img src="./images/slider3.jpg" alt="slide 3">
+            <img src="./images/slide3.jpg" alt="slide 3">
          </div>
          <div class="slide fade">
-            <img src="./images/slider4.jpg" alt="slide 3">
+            <img src="./images/slide4.jpg" alt="slide 3">
          </div>
          <div class="slide fade">
-            <img src="./images/slider5.jpg" alt="slide 3">
+            <img src="./images/slide5.jpg" alt="slide 3">
          </div>
          <div class="slide fade">
-            <img src="./images/slider6.jpg" alt="slide 3">
+            <img src="./images/slide6.jpg" alt="slide 3">
          </div>
          <div class="slide fade">
-            <img src="./images/slider7.jpg" alt="slide 3">
+            <img src="./images/slide7.png" alt="slide 3">
          </div>
       </div>
    </div>
@@ -171,7 +171,6 @@
                      $cate_name = mysqli_fetch_assoc($result)
                    ?>
                   <div class="name"><?php echo $fetch_products['name']; ?></div>
-                  <p>Thương hiệu: <?php echo $fetch_products['trademark']; ?></p>
                   <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u> (-<?php echo $fetch_products['discount']; ?>%)</div>
                   <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
                   <input type="number" min="<?=($fetch_products['quantity']>0) ? 1:0 ?>" max="<?php echo $fetch_products['quantity']; ?>" name="product_quantity" value="<?=($fetch_products['quantity']>0) ? 1:0 ?>" class="qty">
@@ -200,12 +199,15 @@
    <div class="flex">
 
       <div class="image">
-         <img height="307px;" style="border-radius: 4px;" src="images/home_about.jpg" alt="">
+         <img height="307px;" style="border-radius: 4px;" src="images/home-gioithieu.jpg" alt="">
       </div>
 
       <div class="content">
-         <h3>Ngọc Huy Shoes</h3>
-         <p>Giày là một trong những món đồ không thể thiếu trong cuộc sống hằng ngày. Không chỉ là vật dụng bảo vệ đôi chân và phục vụ nhu cầu “xê dịch”, những đôi giày còn thể hiện phong cách cá nhân và niềm đam mê của những tín đồ yêu thời trang.</p>
+         <h3>ToCo Toco</h3>
+         <p> 
+            Bên cạnh niềm tự hào về những ly trà sữa ngon – sạch – tươi, chúng tôi luôn tự tin
+            mang đến khách hàng những trải nghiệm tốt nhất về dịch vụ và không gian.
+         </p>
       </div>
 
    </div>
