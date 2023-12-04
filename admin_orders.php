@@ -65,7 +65,7 @@
       $status = $_GET['status'];
       if($status == "Đã hủy" || $status == "Hoàn thành"){
          mysqli_query($conn, "DELETE FROM `orders` WHERE id = '$delete_id'") or die('query failed');
-         header('location:admin_orders.php');
+         $message[]="Xóa đơn hàng thành công!";
       }else{
          $message[]="Không thể xóa đơn hàng đang trong quá trình xử lý!";
       }

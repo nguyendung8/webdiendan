@@ -32,8 +32,12 @@
 
    if(isset($_GET['delete'])){//Xóa loại sách từ onclick <a></a> có href='delete'
       $delete_id = $_GET['delete'];
-      mysqli_query($conn, "DELETE FROM `categorys` WHERE id = '$delete_id'") or die('query failed');
-      header('location:admin_category.php');
+      try {
+         mysqli_query($conn, "DELETE FROM `categorys` WHERE id = '$delete_id'") or die('query failed');
+         $message[] = 'Xóa danh mục thành công';
+      } catch(Exception) {
+         $message[] = 'Xóa danh mục không thành công';
+      }
    }
 
    if(isset($_POST['update_category'])){//Cập nhật loại sách vào danh mục từ submit có name='update_category'

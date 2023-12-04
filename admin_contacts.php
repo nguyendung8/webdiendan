@@ -12,8 +12,14 @@
 
    if(isset($_GET['delete'])){//xóa tin nhắn từ onclick <a></a> href='delete'
       $delete_id = $_GET['delete'];
-      mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die('query failed');
-      header('location:admin_contacts.php');
+      try {
+         mysqli_query($conn, "DELETE FROM `message` WHERE id = '$delete_id'") or die('query failed');
+
+         $message[] = 'Xóa tin nhắn thành công';
+      } catch(Exception) {
+         
+         $message[] = 'Xóa tin nhắn không thành công';
+      }
    }
 
 ?>
