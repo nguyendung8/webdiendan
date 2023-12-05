@@ -21,6 +21,7 @@
          <a style="text-decoration: none !important;" href="admin_page.php">Trang chủ</a>
          <a style="text-decoration: none !important;" href="admin_products.php">Sản phẩm</a>
          <a style="text-decoration: none !important;" href="admin_category.php">Danh mục</a>
+         <a style="text-decoration: none !important;" href="admin_news.php">Tin tức</a>
          <a style="text-decoration: none !important;" href="admin_orders.php">Đơn hàng</a>
          <a style="text-decoration: none !important;" href="admin_users.php">Người dùng</a></a>
          <a style="text-decoration: none !important;" href="admin_contacts.php">Tin nhắn</a>
