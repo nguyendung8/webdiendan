@@ -116,6 +116,20 @@
          align-items: center;
          justify-content: center;
       }
+      .discount {
+         font-weight: 800;
+         background: #282828;
+         border-radius: 50%;
+         color: #d3b673;
+         width: 40px;
+         height: 40px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         position: absolute;
+         top: 10px;
+         right: 19px;
+      }
    </style>
 </head>
 <body>
@@ -171,7 +185,8 @@
                      $cate_name = mysqli_fetch_assoc($result)
                    ?>
                   <div class="name"><?php echo $fetch_products['name']; ?></div>
-                  <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u> (-<?php echo $fetch_products['discount']; ?>%)</div>
+                  <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u></div>
+                  <div class="discount"> <?php echo $fetch_products['discount']; ?>%</div>
                   <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
                   <input type="number" min="<?=($fetch_products['quantity']>0) ? 1:0 ?>" max="<?php echo $fetch_products['quantity']; ?>" name="product_quantity" value="<?=($fetch_products['quantity']>0) ? 1:0 ?>" class="qty">
                   <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">

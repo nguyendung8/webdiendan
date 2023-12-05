@@ -46,6 +46,9 @@
             align-items: center;
             gap: 10px;
         }
+        .out_of_stock {
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
