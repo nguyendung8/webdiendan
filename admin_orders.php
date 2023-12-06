@@ -123,8 +123,8 @@
                         <select name="update_payment" required>
                            <option value="" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
                            <!-- <option value="Chờ xác nhận">Chờ xác nhận</option> -->
-                           <option value="Đã xác nhận">Đã xác nhận</option>
-                           <option value="Đang xử lý">Đang xử lý</option>
+                           <?php if($fetch_orders['payment_status'] == 'Chờ xác nhận') {  ?><option value="Đã xác nhận">Đã xác nhận</option> <?php } ?>
+                           <?php if($fetch_orders['payment_status'] == 'Chờ xác nhận' || $fetch_orders['payment_status'] == 'Đã xác nhận') {  ?><option value="Đang xử lý">Đang xử lý</option><?php } ?>
                            <option value="Hoàn thành">Hoàn thành</option>
                         </select>
                         <input type="submit" value="Cập nhật" name="update_order" class="option-btn">
