@@ -21,45 +21,24 @@
    .changepw-btn:hover {
       opacity: 0.7;
    }
+   a {
+      text-decoration: none;
+   }
 </style>
 <header class="header">
 
-   <div class="header-1">
-      <div class="flex">
-         <div class="share">
-            <a href="https://www.facebook.com/ngochuymarketing" class="fab fa-facebook-f" target="_blank"></a>
-            <a href="#" class="fab fa-instagram"></a>
-         </div>
-         <p><a href="login.php">Đăng nhập mới</a> | <a href="register.php">Đăng ký</a> </p>
-      </div>
-   </div>
-
    <div class="header-2">
       <div class="flex">
-         <a href="home.php" class="logo"><img width="210px" height="85px" src="./images/logo_toco.png"></a>
+         <a href="home.php" class="logo"><img width="100px" height="85px" src="./images/logo-dd.png"></a>
 
          <nav class="navbar">
-            <a href="home.php">Trang chủ</a>
-            <a href="about.php">Thông tin</a>
-            <a href="shop.php">Cửa hàng</a>
-            <a href="news.php">Tin tức</a>
-            <a href="contact.php">Liên hệ</a>
-            <a href="orders.php">Đơn hàng</a>
+            <a href="home.php">Nhóm cộng đồng</a>
+            <a href="home.php">Nhóm của tôi</a>
          </nav>
 
          <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
-            <a href="search_page.php" class="fas fa-search"></a>
             <div id="user-btn" class="fas fa-user"></div>
-            <?php
-               $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-               $cart_rows_number = mysqli_num_rows($select_cart);
-               $total= 0;
-               while($fetch_total=mysqli_fetch_assoc($select_cart)){
-                  $total+=$fetch_total['quantity'] * $fetch_total['price'];
-               }
-            ?>
-            <a href="cart.php"> <i class="fas fa-shopping-cart"></i> <span>(<?php echo $cart_rows_number; ?>)</span> <span>(<?php echo number_format($total,0,',','.' ); ?> VND)</span> </a>
          </div>
 
          <div style="z-index: 1000;" class="user-box">

@@ -43,6 +43,7 @@
    <title>Quên mật khẩu</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
    <link rel="stylesheet" href="css/style.css">
    <style>
@@ -90,7 +91,7 @@
     }
     ?>
    <div class="change-password">
-    <a href="./login.php" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại</a>
+    <a href="./login.php" style="color: blue;" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại</a>
     <h1 class="cp-title">Quên mật khẩu</h1>
     <form method="POST">
     <div class="form-group">
@@ -101,7 +102,7 @@
         <label>Mật khẩu mới</label>
         <input type="password" name="new_password" class="form-control" placeholder="Nhập mật khẩu mới" required>
     </div>
-    <input type="submit" name="submit" class="btn btn-primary submit-btn" value="Gửi">
+    <input type="submit" name="submit" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary submit-btn" value="Gửi">
     </form>
 </div>
 

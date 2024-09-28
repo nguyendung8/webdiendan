@@ -38,6 +38,7 @@
    <title>Đăng ký</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -69,8 +70,8 @@ if(isset($message)){
          <option value="user">user</option>
          <option value="admin">admin</option>
       </select> -->
-      <input type="submit" name="submit" value="Đăng ký ngay" class="btn">
-      <p>Bạn đã có tài khoản? <a href="login.php">Đăng nhập</a></p>
+      <input type="submit" name="submit" value="Đăng ký ngay" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
+      <p>Bạn đã có tài khoản? <a style="color: blue; text-decoration: none;" href="login.php">Đăng nhập</a></p>
    </form>
 
 </div>

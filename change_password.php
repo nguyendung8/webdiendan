@@ -91,10 +91,9 @@
         <label>Mật khẩu mới</label>
         <input type="password" name="new_password" class="form-control" placeholder="Nhập mật khẩu mới" required>
     </div>
-    <input type="submit" name="submit" class="btn btn-primary submit-btn" value="Đổi">
+    <input type="submit" name="submit" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px; display: flex; margin: auto;" class="btn-primary flex" value="Đổi">
     </form>
 </div>
-<?php include 'footer.php'; ?>
 
 <script src="js/script.js"></script>
 

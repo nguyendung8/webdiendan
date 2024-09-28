@@ -19,7 +19,7 @@
             $_SESSION['admin_name'] = $row['name'];
             $_SESSION['admin_email'] = $row['email'];
             $_SESSION['admin_id'] = $row['id'];
-            header('location:admin_page.php');
+            header('location:admin_posts.php');
 
          }elseif($row['user_type'] == 'user'){
 
@@ -47,6 +47,7 @@
    <title>Đăng nhập</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="css/style.css">
    <style>
       .forget-btn {
@@ -78,10 +79,10 @@ if(isset($message)){
       <h3>Đăng nhập</h3>
       <input type="email" name="email" placeholder="Email" required class="box">
       <input type="password" name="password" placeholder="Mật khẩu" required class="box">
-      <input style="margin-bottom: 7px;" type="submit" name="submit" value="Đăng nhập" class="btn">
+      <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
       <br>
-      <a class="forget-btn" href="forget_password.php">Quên mật khẩu ?</a>
-      <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
+      <a class="forget-btn" style="color: blue; text-decoration: none;" href="forget_password.php">Quên mật khẩu ?</a>
+      <p>Bạn chưa có tài khoản? <a style="color: blue; text-decoration: none;" href="register.php">Đăng ký</a></p>
    </form>
 
 </div>

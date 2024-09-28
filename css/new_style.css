@@ -1,0 +1,82 @@
+/* Đảm bảo box-container được căng hết chiều ngang */
+.post-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* Các box chứa bài đăng */
+.post {
+    display: flex;
+    margin: auto;
+    gap: 10px;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    align-items: center;
+}
+
+/* Ảnh bài đăng */
+.post img {
+    max-width: 200px;
+    max-height: 150px;
+    margin-right: 20px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Các thông tin còn lại */
+.post .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: unset;
+}
+
+.post .sub-info {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Căn chỉnh thông tin và nút tùy chọn */
+.post div {
+    flex: 1;
+}
+.post .action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.post .action a {
+    width: fit-content;
+}
+
+.option-btn, .delete-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+.option-btn:hover, .delete-btn:hover {
+    opacity: 0.9;
+}
+
+.empty {
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+}
