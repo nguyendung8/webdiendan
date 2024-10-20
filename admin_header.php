@@ -20,7 +20,7 @@
       <nav style="margin-bottom: 0px !important;min-height: unset !important;" class="navbar">
          <a style="text-decoration: none !important;" href="admin_posts.php">Bài viết</a>
          <a style="text-decoration: none !important;" href="admin_groups.php">Nhóm</a>
-         <a style="text-decoration: none !important;" href="admin_verifies.php">Duyệt bài</a>
+         <a style="text-decoration: none !important;" href="admin_confirm_post.php">Duyệt bài</a>
       </nav>
 
       <div class="icons">

@@ -33,7 +33,8 @@
 
          <nav class="navbar">
             <a href="home.php">Nhóm cộng đồng</a>
-            <a href="home.php">Nhóm của tôi</a>
+            <a href="user_groups.php">Nhóm của tôi</a>
+            <a href="user_posts.php">Bài viết của tôi</a>
          </nav>
 
          <div class="icons">

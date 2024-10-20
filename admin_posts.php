@@ -19,14 +19,14 @@ if (isset($_POST['add_post'])) { // thêm bài đăng mới từ submit form nam
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = 'uploaded_img/' . $image;
-    $created_at = date('Y-m-d H:i:s'); // thời gian hiện tại
+    $created_at = date('Y-m-d H:i:s');
 
     $select_post_title = mysqli_query($conn, "SELECT title FROM `posts` WHERE title = '$title'") or die('query failed'); // kiểm tra bài đăng đã tồn tại chưa
 
     if (mysqli_num_rows($select_post_title) > 0) {
         $message[] = 'Bài đăng đã tồn tại.';
     } else { // nếu chưa tồn tại thì thêm mới
-        $add_post_query = mysqli_query($conn, "INSERT INTO `posts`(user_id, group_id, title, image, created_at) VALUES('$user_id', '$group_id', '$title', '$image', '$created_at')") or die('query failed');
+        $add_post_query = mysqli_query($conn, "INSERT INTO `posts`(user_id, group_id, title, image, created_at, status) VALUES('$user_id', '$group_id', '$title', '$image', '$created_at', 'Đã duyệt')") or die('query failed');
 
         if ($add_post_query) {
             if ($image_size > 2000000) { // kiểm tra kích thước ảnh
@@ -40,14 +40,30 @@ if (isset($_POST['add_post'])) { // thêm bài đăng mới từ submit form nam
         }
     }
 }
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if (isset($_GET['delete'])) { // xóa bài đăng
+
+
+if (isset($_GET['delete'])) { // Xóa bài đăng
     $delete_id = $_GET['delete'];
-    $delete_image_query = mysqli_query($conn, "SELECT image FROM `posts` WHERE id = '$delete_id'") or die('query failed');
-    $fetch_delete_image = mysqli_fetch_assoc($delete_image_query);
-    unlink('uploaded_img/' . $fetch_delete_image['image']); // xóa file ảnh của bài đăng
-    mysqli_query($conn, "DELETE FROM `posts` WHERE id = '$delete_id'") or die('query failed');
-    header('location:admin_posts.php');
+
+    try {
+        // Vô hiệu hóa ràng buộc khóa ngoại
+        mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 0") or die('Query failed: Disable foreign key checks');
+
+        // Xóa bài đăng
+        $query = "DELETE FROM `posts` WHERE id = '$delete_id'";
+        mysqli_query($conn, $query) or die('Query failed: Delete post');
+
+        // Kích hoạt lại ràng buộc khóa ngoại
+        mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 1") or die('Query failed: Enable foreign key checks');
+
+        header('Location: admin_posts.php');
+        exit(); // Đảm bảo dừng script sau khi redirect
+
+    } catch (mysqli_sql_exception $e) {
+        $message[] = 'Không thể xóa bài đăng này!';
+    }
 }
 
 if (isset($_POST['update_post'])) { // cập nhật bài đăng
@@ -76,6 +92,66 @@ if (isset($_POST['update_post'])) { // cập nhật bài đăng
     header('location:admin_posts.php');
 }
 
+  // Xử lý hành động like/dislike
+  if (isset($_POST['like']) || isset($_POST['dislike'])) {
+    $post_id = $_POST['post_id'];
+    $action = isset($_POST['like']) ? 'like' : 'dislike';
+
+    // Kiểm tra nếu user đã like/dislike bài viết này chưa
+    $check_action = mysqli_query($conn, "SELECT * FROM likes_dislikes WHERE post_id='$post_id' AND user_id='$admin_id'");
+    
+    if (mysqli_num_rows($check_action) > 0) {
+        $update_action = mysqli_query($conn, "UPDATE likes_dislikes SET action='$action' WHERE post_id='$post_id' AND user_id='$admin_id'");
+    } else {
+        $insert_action = mysqli_query($conn, "INSERT INTO likes_dislikes (post_id, user_id, action) VALUES ('$post_id', '$admin_id', '$action')");
+    }
+
+    // Cập nhật số lượng like/dislike
+    if ($action == 'like') {
+        mysqli_query($conn, "UPDATE posts SET likes = likes + 1 WHERE id='$post_id'");
+    } else {
+        mysqli_query($conn, "UPDATE posts SET dislikes = dislikes + 1 WHERE id='$post_id'");
+    }
+}
+
+// Xử lý thêm bình luận
+if (isset($_POST['comment'])) {
+    $post_id = $_POST['post_id'];
+    $comment = mysqli_real_escape_string($conn, $_POST['comment_text']);
+    
+    mysqli_query($conn, "INSERT INTO comments (post_id, user_id, content) VALUES ('$post_id', '$admin_id', '$comment')");
+}
+
+// Xử lý cập nhật bình luận
+if (isset($_POST['update_comment'])) {
+    $comment_id = $_POST['comment_id'];
+    $comment = mysqli_real_escape_string($conn, $_POST['edit_comment_text']);
+    
+    mysqli_query($conn, "UPDATE comments SET content='$comment' WHERE id='$comment_id'");
+    header('location:admin_posts.php');
+}
+
+
+if (isset($_GET['cmt_id'])) { 
+    $delete_id = $_GET['cmt_id'];
+
+    try {
+        // Vô hiệu hóa ràng buộc khóa ngoại
+        mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 0") or die('Query failed: Disable foreign key checks');
+
+        mysqli_query($conn, "DELETE FROM comments WHERE id='$delete_id'");
+
+        // Kích hoạt lại ràng buộc khóa ngoại
+        mysqli_query($conn, "SET FOREIGN_KEY_CHECKS = 1") or die('Query failed: Enable foreign key checks');
+
+        header('Location: admin_posts.php');
+        exit(); // Đảm bảo dừng script sau khi redirect
+
+    } catch (mysqli_sql_exception $e) {
+        $message[] = 'Không thể xóa bình luận này!';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -93,6 +169,101 @@ if (isset($_POST['update_post'])) { // cập nhật bài đăng
       .post {
          border: 1px solid #ccc;
       }
+      .post .actions {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .post .actions form {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .post .actions button {
+        background-color: transparent;
+        border: none;
+        font-size: 14px;
+        color: #606770;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .post .actions button:hover {
+        background-color: #e4e6eb;
+    }
+
+    .post .actions span {
+        font-size: 13px;
+        color: #606770;
+    }
+
+    .post .comment-section {
+        margin-top: 15px;
+    }
+
+    .post .comment-section h4 {
+        font-size: 14px;
+        color: #1c1e21;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .post .comment-section .comment {
+        display: flex;
+        flex-direction: column;
+        background-color: #f0f2f5;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .post .comment-section .comment strong {
+        color: #1c1e21;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .post .comment-section .comment p {
+        font-size: 13px;
+        color: #4b4f56;
+        margin-top: 5px;
+    }
+
+    .post .comment-section form {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .post .comment-section input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        background-color: #f0f2f5;
+        font-size: 14px;
+        color: #1c1e21;
+    }
+
+    .post .comment-section button {
+        background-color: #1877f2;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .post .comment-section button:hover {
+        background-color: #166fe5;
+    }
    </style>
     
 </head>
@@ -127,37 +298,106 @@ if (isset($_POST['update_post'])) { // cập nhật bài đăng
 
 <section class="show-products">
 
-    <div class="post-container">
-
-        <?php
-        $select_posts = mysqli_query($conn, "SELECT posts.*, users.name AS user_name, groups.group_name 
+<div class="post-container">
+    <?php
+        $select_posts = mysqli_query($conn, "
+        SELECT posts.*, users.name AS user_name, groups.group_name, 
+        (SELECT COUNT(*) FROM likes_dislikes WHERE post_id = posts.id AND action = 'like') AS total_likes, 
+        (SELECT COUNT(*) FROM likes_dislikes WHERE post_id = posts.id AND action = 'dislike') AS total_dislikes 
         FROM posts 
         JOIN users ON posts.user_id = users.id 
-        JOIN groups ON posts.group_id = groups.id ") or die('query failed');
-        if (mysqli_num_rows($select_posts) > 0) {
-            while ($fetch_posts = mysqli_fetch_assoc($select_posts)) {
-        ?>
-                <div class="post">
-                    <img src="uploaded_img/<?php echo $fetch_posts['image']; ?>" alt="">
+        JOIN groups ON posts.group_id = groups.id
+        WHERE posts.status = 'Đã duyệt'
+    ") or die('query failed');
+    if (mysqli_num_rows($select_posts) > 0) {
+        while ($post = mysqli_fetch_assoc($select_posts)) {
+    ?>
+            <div style="flex-direction:column; align-items: self-start" class="post">
+                <div style="display: flex;">
+                    <img src="uploaded_img/<?php echo $post['image']; ?>" alt="Post Image">
                     <div style="flex: 2">
-                        <div class="title"><?php echo $fetch_posts['title']; ?></div>
-                        <div class="sub-info">Người đăng: <?php echo $fetch_posts['user_name']; ?></div>
-                        <div class="sub-info">Nhóm: <?php echo $fetch_posts['group_name']; ?></div>
-                        <div class="sub-info">Ngày tạo: <?php echo $fetch_posts['created_at']; ?></div>
+                        <div class="title"><?php echo $post['title']; ?></div>
+                        <div class="sub-info">Người đăng: <?php echo $post['user_name']; ?></div>
+                        <div class="sub-info">Nhóm: <?php echo $post['group_name']; ?></div>
+                        <div class="sub-info">Ngày tạo: <?php echo $post['created_at']; ?></div>
                     </div>
                     <div class="action">
-                       <a href="admin_posts.php?update=<?php echo $fetch_posts['id']; ?>" class="option-btn">Cập nhật</a>
-                       <a href="admin_posts.php?delete=<?php echo $fetch_posts['id']; ?>" class="delete-btn" onclick="return confirm('Xóa bài đăng này?');">Xóa</a>
+                        <a href="admin_posts.php?update=<?php echo $post['id']; ?>" class="option-btn">Cập nhật</a>
+                        <a href="admin_posts.php?delete=<?php echo $post['id']; ?>" class="delete-btn" onclick="return confirm('Xóa bài đăng này?');">Xóa</a>
                     </div>
                 </div>
-        <?php
-            }
-        } else {
-            echo '<p class="empty">Không có bài đăng nào!</p>';
-        }
-        ?>
 
-    </div>
+                <!-- Like, Dislike Buttons and Counts -->
+                 <div style="width: 100%;">
+                    <div class="actions">
+                        <form action="" method="POST">
+                            <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                            <button type="submit" name="like">Like</button>
+                            <button type="submit" name="dislike">Dislike</button>
+                            <span style="color: #3dcd3d;"><?php echo $post['total_likes']; ?> Likes</span>
+                            <span style="color: #e03333;"><?php echo $post['total_dislikes']; ?> Dislikes</span>
+                        </form>
+                    </div>
+    
+                    <!-- Comment Section -->
+                    <div class="comment-section">
+                        <h4>Bình luận:</h4>
+                        <?php
+                        $select_comments = mysqli_query($conn, "
+                            SELECT comments.*, users.name AS user_name 
+                            FROM comments 
+                            JOIN users ON comments.user_id = users.id 
+                            WHERE comments.post_id = '".$post['id']."' 
+                            ORDER BY comments.created_at ASC
+                        ");
+    
+                        if (mysqli_num_rows($select_comments) > 0) {
+                            while ($comment = mysqli_fetch_assoc($select_comments)) {
+                        ?>
+                            <div class="comment">
+                                <strong><?php echo $comment['user_name']; ?></strong>
+                                <p style="font-size: 14px;"><?php echo $comment['content']; ?></p>
+    
+                                <div style="display: flex; gap: 5px; font-size: 13px;">
+                                    <?php if ($comment['user_id'] == $_SESSION['admin_id']) { ?>
+                                        <a href="?edit=<?php echo $comment['id']; ?>" class="btn-edit">Sửa</a>
+                                    <?php } ?>
+                                        <a style="color: red;" href="?cmt_id=<?php echo $comment['id']; ?>" class="btn-delete" 
+                                        onclick="return confirm('Bạn có chắc muốn xóa bình luận này?');">Xóa
+                                        </a>
+                                    </div>
+                            </div>
+    
+                            <?php if (isset($_GET['edit']) && $_GET['edit'] == $comment['id']) { ?>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="comment_id" value="<?php echo $comment['id']; ?>">
+                                    <input type="text" name="edit_comment_text" value="<?php echo $comment['content']; ?>" required>
+                                    <button type="submit" name="update_comment">Cập nhật</button>
+                                </form>
+                            <?php } ?>
+                        <?php
+                            }
+                        } else {
+                            echo '<p>Chưa có bình luận nào.</p>';
+                        }
+                        ?>
+    
+                        <!-- Add New Comment -->
+                        <form action="" method="POST">
+                            <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                            <input type="text" name="comment_text" placeholder="Viết bình luận..." required>
+                            <button type="submit" name="comment">Bình luận</button>
+                        </form>
+                    </div>
+                 </div>
+            </div>
+    <?php
+        }
+    } else {
+        echo '<p class="empty">Không có bài đăng nào!</p>';
+    }
+    ?>
+</div>
 
 </section>
 
